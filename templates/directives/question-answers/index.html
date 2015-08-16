@@ -1,0 +1,64 @@
+<script>
+    console.log("included");
+</script>
+<div class="form-group">
+    <label class="col-xs-2 control-label">Answers</label>
+    <div class="col-xs-10">
+        
+        <div ng-repeat="answer in question.answers" ng-show="isSingleChoise(question) || isMultipleChoise(question)">
+            <div ng-show="isTest(question)" class="col-xs-1 col-md-offset-0 pero" style="padding: 0;">
+                <div class="{{question.inputType}}" style="padding: 0;">
+                    <label>
+                        <input type="{{question.inputType}}" name="{{question.id + '-answer'}}" 
+                                  ng-model="answer.isCorrect" value="true" ng-click="radioChanged(answer, question);">
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-xs-8 col-md-offset-0" style="padding: 0;">
+                <input class="form-control" type="text" ng-model="answer.text">
+            </div>
+
+            <a href=""  ng-click="deleteAnswer(question, answer);" class="col-xs-2 text-danger"
+               style="padding-top: 10px;"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+
+            <div class="clearfix"></div>
+        </div>
+        
+        <div ng-show="isText(question) && question.answers.length" class="col-xs-8 col-md-offset-0" 
+             style="padding: 0;">
+            <label ng-show="isTest()">Correct</label>
+            <input ng-show="isTest()" class="form-control" type="text" ng-model="question.answers[0].text">
+        </div>
+
+        <div ng-show="isRange(question) && question.answers.length" class="col-xs-8 col-md-offset-0" 
+             style="padding: 0;">
+                <label class="col-xs-2 control-label">Min</label>
+                <div class="col-xs-8 col-md-offset-0" style="padding: 0;">
+                    <input class="form-control" type="number" ng-model="question.answers[0].min">
+                </div>
+                <div class="clearfix"></div>
+                <label class="col-xs-2 control-label">Max</label>
+                <div class="col-xs-8 col-md-offset-0" style="padding: 0;">
+                    <input class="form-control" type="number" ng-model="question.answers[0].max">
+                </div>
+                <div class="clearfix"></div>
+                <label class="col-xs-2 control-label" ng-show="isTest()">Correct</label>
+                <div class="col-xs-8 col-md-offset-0" style="padding: 0;" ng-show="isTest()">
+                    <input class="form-control" type="number" ng-model="question.answers[0].correct">
+                </div>
+         </div>
+        
+        <div class="clearfix"></div>
+        <br >
+        <a href="" ng-click="addAnswer(question);">
+            <span class="glyphicon glyphicon-plus"></span> Add new answer</a>
+
+    </div>
+</div>
+
+<script>
+   $(document).ready(function() {
+        $.material.init();
+    });
+</script>

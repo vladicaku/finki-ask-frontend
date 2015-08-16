@@ -1,0 +1,103 @@
+<style>
+    .fixedSizeButton
+    {
+        display: inline-block;
+        width: 80px;
+        margin-left: 15px;
+    }
+</style>
+
+<div class="col-xs-12">
+
+    <!--
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Options</h3>
+        </div>
+
+        <div class="panel-body">
+
+        </div>
+    </div>
+    -->
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Tests</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="togglebutton col-xs-3">
+                <label>
+                    <input type="checkbox" ng-change="changefilterOnlyActive()" ng-model="myCheckBox" checked="false"> Show only active tests
+                </label>
+            </div>
+
+
+            <div class="form-group col-xs-4" style="float: right;">
+                <label class="col-xs-1 control-label">
+                    <span class="glyphicon glyphicon-search" style="padding-top: 10px;"></span>
+                </label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" ng-model="search.text" placeholder="Search">
+                </div>
+            </div>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <!-- <th>Active</th> -->
+                        <th>Name</th>
+                        <th>Date created</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="well" dir-paginate="test in tests |  filter: {$ : search.text }  |  filter : search.filterOnlyActive : true | itemsPerPage: 5  " ng-class="{ 'success' : test.isActive == 'true' };">
+                        <td><p>{{test.id}}</p></td>
+                        <!--
+                        <td>
+                            <i ng-show="test.isActive == 'true'" class="btn-lg mdi-material-teal  mdi-action-done"></i>
+                            <i ng-show="test.isActive == 'false'" class="btn-lg mdi-material-red  mdi-content-clear "></i>
+                        </td>
+                        -->
+                        <td><p><strong>{{test.name}}</strong></p></td>
+                        <td><p>{{test.dateCreated}}</p></td>
+                        <td><p>{{test.start}}</p></td>
+                        <td><p>{{test.end}}</p></td>
+                        <!--
+                        <td>
+                            <a class="btn btn-primary btn-sm">Edit</a>
+                            <a class="btn btn-primary btn-sm btn-info">Clone</a>
+                            <a class="btn btn-primary btn-sm btn btn-danger">Delete</a>
+
+                            <a style="margin-left: 30px;" class="btn btn-primary btn-sm btn btn-success">Results</a>
+                        </td>
+                        -->
+                        <td class="col-xs-3">
+                            <p>
+                                <a class="fixedSizeButton text-primary" href=""><i class="mdi-editor-border-color"></i> Edit</a>
+                                <a class="fixedSizeButton text-danger" href=""><i class="mdi-content-clear"></i> Delete</a>
+
+                            </p>
+                            <p>
+                                <a class="fixedSizeButton text-info" href=""><i class="mdi-content-content-copy"></i> Clone</a>
+                                <a class="fixedSizeButton text-success" href=""><i class="mdi-social-poll"></i> Results</a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+         </div>
+     </div>
+
+    <div style="text-align: center;">
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>
