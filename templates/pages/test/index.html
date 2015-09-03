@@ -1,175 +1,195 @@
 <style>
-    .label-custom-black label
-    {
-        color: rgba(0,0,0,.84) !important;
+    .label-custom-black label {
+        color: rgba(0, 0, 0, .84) !important;
     }
 
-    .button-custom-margin
-    {
+    .button-custom-margin {
         margin: 5px 0 0 0;
     }
 </style>
 
 <div class="col-xs-12">
-    <div class="panel panel-material-blue shadow-z-2">
-
-    <div class="panel-heading">
-        <h2 ng-show="test.isNew" class="panel-title">Create test</h2>
-        <h2 ng-show="!test.isNew" class="panel-title">Edit test</h2>
-    </div>
-    
     <form class="form-horizontal">
-        <br>
         <fieldset>
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label" for="id">Id</label>
-                <div class="col-xs-3">
-                    <input class="form-control" id="id" type="text"disabled="" ng-model="test.id">
+            <div class="panel panel-material-blue shadow-z-2">
+                <div class="panel-heading">
+                    <h2 ng-show="test.isNew" class="panel-title">Create test</h2>
+                    <h2 ng-show="!test.isNew" class="panel-title">Edit test</h2>
                 </div>
 
-                <div class="col-xs-2">
-                    <button class="btn btn-flat btn-sm btn-material-red button-custom-margin" ng-click="deleteTest()">
-                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
-                        <span class="glyphicon glyphicon-remove"></span> Delete test
-                    </button>
+                <div class="panel-body">
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label class="col-xs-2 control-label" for="id">Id</label>
+
+                        <div class="col-xs-3">
+                            <input class="form-control" id="id" type="text" disabled="" ng-model="test.id">
+                        </div>
+
+                        <div class="col-xs-2">
+                            <button class="btn btn-flat btn-sm btn-material-red button-custom-margin" ng-click="deleteTest()">
+                                <!--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
+                                <span class="glyphicon glyphicon-remove"></span> Delete test
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label for="testName" class="col-xs-2 control-label control-label-material-green"> Test name</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control form-control-material-blue" id="testName"
+                                   ng-model="test.name" required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label for="testType" class="col-xs-2 control-label">Test type</label>
+
+                        <div class="col-lg-3">
+                            <select class="form-control" id="testType" required
+                                    ng-options="type.value as type.label for type in testTypes" ng-model="test.type"
+                                    required="required">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div ng-hide="test.type == testTypesEnum.test" class="form-group form-group-material-blue label-custom-black">
+                        <label for="testType" class="col-xs-2 control-label">Public</label>
+
+                        <div class="col-lg-3">
+                            <div class="checkbox checkbox-material-blue" style="padding-top: 0;">
+                                <label>
+                                    <input type="checkbox" ng-model="test.isPublic" required="required">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black"
+                         ng-controller="DatePickerController">
+                        <label class="col-xs-2 control-label">Start date</label>
+
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
+                                   ng-model="$parent.test.startDate" is-open="status.opened" required="required"/>
+                        </div>
+                        <div style="col-xs-2">
+                            <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin"
+                                    ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i> Select date
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label class="col-xs-2 control-label">Start time</label>
+
+                        <div class="col-xs-4">
+                            <timepicker ng-model="test.startTime" show-meridian="false"></timepicker>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black"
+                         ng-controller="DatePickerController">
+                        <label class="col-xs-2 control-label">End date</label>
+
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
+                                   ng-model="$parent.test.endDate" is-open="status.opened"/>
+                        </div>
+                        <div style="col-xs-2">
+                            <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="open($event)">
+                                <i class="glyphicon glyphicon-calendar"></i> Select date
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label class="col-xs-2 control-label">End time</label>
+
+                        <div class="col-xs-4">
+                            <timepicker ng-model="test.endTime" show-meridian="false"></timepicker>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label for="duration" class="col-xs-2 control-label">Duration</label>
+
+                        <div class="col-lg-3">
+                            <input type="number" class="form-control" id="duration" required min="0"
+                                   ng-model="test.duration" required="required">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-material-blue label-custom-black">
+                        <label for="password" class="col-xs-2 control-label">Password</label>
+
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" id="password" required ng-model="test.password" required="required">
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
 
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label for="testName" class="col-xs-2 control-label control-label-material-green">Test name</label>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control form-control-material-blue" id="testName" ng-model="test.name" required="required">
-                </div>
-            </div>
-            
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label for="testType" class="col-xs-2 control-label">Test type</label>
-                <div class="col-lg-3">
-                    <select class="form-control" id="testType" required ng-options="type.value as type.label for type in testTypes" ng-model="test.type" required="required">
-                    </select>
-                </div>
-            </div>
+            <!-- Questions -->
+            <div class="jumbotron" ng-repeat="question in test.questions">
+                <div class="form-group form-group-material-blue label-custom-black">
+                    <label class="col-xs-2 control-label">Question text</label>
 
-            <div ng-hide="test.type == testTypesEnum.test" class="form-group form-group-material-blue label-custom-black">
-                <label for="testType" class="col-xs-2 control-label">Public</label>
-                <div class="col-lg-3">
-                    <div class="checkbox checkbox-material-blue" style="padding-top: 0;">
-                        <label>
-                            <input type="checkbox" ng-model="test.isPublic" required="required">
-                        </label>
+                    <div class="col-xs-8">
+                        <input class="form-control" type="text" ng-model="question.text" placeholder="Question text"
+                               required="required">
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-flat btn-sm btn-material-red button-custom-margin"
+                                ng-click="deleteQuestion(question);">
+                            <!--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
+                            <span class="glyphicon glyphicon-remove"></span> Delete
+                        </button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="form-group form-group-material-blue label-custom-black" ng-controller="DatePickerController">
-                <label class="col-xs-2 control-label">Start date</label>
-                <div class="col-xs-3" >
-                    <input type="text" class="form-control"  datepicker-popup="dd/MM/yyyy" ng-model="$parent.test.startDate" is-open="status.opened" required="required"/>
+
+                <div class="form-group form-group-material-blue label-custom-black">
+                    <label class="col-xs-2 control-label">Question type</label>
+
+                    <div class="col-xs-5">
+                        <select class="form-control" ng-options="type.value as type.label for type in questionTypes"
+                                ng-model="question.type" ng-change="questionTypeChanged(question)" required>
+                        </select>
+                    </div>
                 </div>
-                <div style="col-xs-2">
-                    <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="open($event)">
-                        <i class="glyphicon glyphicon-calendar"></i>  Select date
-                    </button>
+
+                <div ng-show="isTest()" class="form-group form-group-material-blue label-custom-black">
+                    <label class="col-xs-2 control-label">Points</label>
+
+                    <div class="col-xs-5">
+                        <input type="number" class="form-control" ng-model="question.points" required="required">
+                    </div>
                 </div>
+
+                <!-- Answers -->
+                <question-answers-directive></question-answers-directive>
             </div>
 
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label">Start time</label>
-                <div class="col-xs-4">
-                    <timepicker ng-model="test.startTime" show-meridian="false"></timepicker>
-                </div>
-            </div>
-
-            <div class="form-group form-group-material-blue label-custom-black" ng-controller="DatePickerController">
-                <label class="col-xs-2 control-label">End date</label>
-                <div class="col-xs-3" >
-                    <input type="text" class="form-control"  datepicker-popup="dd/MM/yyyy" ng-model="$parent.test.endDate" is-open="status.opened" />
-                </div>
-                <div style="col-xs-2">
-                    <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="open($event)">
-                        <i class="glyphicon glyphicon-calendar"></i>  Select date
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label">End time</label>
-                <div class="col-xs-4">
-                    <timepicker ng-model="test.endTime" show-meridian="false"></timepicker>
-                </div>
-            </div>
-            
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label for="duration" class="col-xs-2 control-label">Duration</label>
-                <div class="col-lg-3">
-                    <input type="number" class="form-control" id="duration" required min="0" ng-model="test.duration" required="required">
-                </div>
-            </div>
-            
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label for="password" class="col-xs-2 control-label">Password</label>
-                <div class="col-lg-3">
-                    <input type="text" class="form-control" id="password" required ng-model="test.password" required="required">
-                </div>
-            </div>
-            
         </fieldset>
     </form>
-    
+
+    <div class="well">
+        <button class="btn btn-flat btn-material-blue" ng-click="addQuestion();">
+            <span class="glyphicon glyphicon-plus"></span> Add new question
+        </button>
+    </div>
+
+    <div class="well">
+        <a ng-click="submit()" class="btn btn-success">Save</a>
+        <a href="javascript:void(0)" class="btn btn-danger">Cancel</a>
+    </div>
 </div>
 
-<form class="form-horizontal">
-    
-    <fieldset>
-
-        <div class="jumbotron" ng-repeat="question in test.questions">
-      
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label">Question text</label>
-                <div class="col-xs-8">
-                    <input class="form-control" type="text" ng-model="question.text" placeholder="Question text" required="required">
-                </div>
-                <div class="col-xs-2">
-                    <button class="btn btn-flat btn-sm btn-material-red button-custom-margin" ng-click="deleteQuestion(question);">
-                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
-                        <span class="glyphicon glyphicon-remove"></span>  Delete
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label">Question type</label>
-                    <div class="col-xs-5">
-                        <select class="form-control" ng-options="type.value as type.label for type in questionTypes" 
-                                ng-model="question.type" ng-change="questionTypeChanged(question)" required>
-                    </select>
-                    </div>
-            </div>
-
-            <div ng-show="isTest()" class="form-group form-group-material-blue label-custom-black">
-                <label class="col-xs-2 control-label">Points</label>
-                <div class="col-xs-5">
-                    <input type="number" class="form-control" ng-model="question.points" required="required">
-                </div>
-            </div>
-            
-            <question-answers-directive></question-answers-directive>
-            
-    </fieldset>
-</form>
-    
-<div class="well">
-    <button class="btn btn-flat btn-material-blue" ng-click="addQuestion();"><span class="glyphicon glyphicon-plus"></span>  Add new question</button>
-</div>
-    
-<div class="well">
-    <a ng-click="submit()" class="btn btn-success">Save</a>
-    <a href="javascript:void(0)" class="btn btn-danger">Cancel</a>
-</div>
-</div>
-    
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // This command is used to initialize some elements and make them work properly
         $.material.init();
     });

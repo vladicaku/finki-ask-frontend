@@ -66,6 +66,7 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
 
     var id = $routeParams.id;
     if (id != undefined) {
+        $scope.test.isNew = false;
         $scope.test = TestService.readTest(id);
         $scope.test.questions.forEach(function(question) {
             if (question.type == $scope.questionTypesEnum.range) {
@@ -78,7 +79,7 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
         });
     }
     else {
-
+        $scope.test.isNew = true;
     }
 
     // Test methods
