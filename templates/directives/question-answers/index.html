@@ -51,7 +51,8 @@
         
         <div class="clearfix"></div>
         <br >
-        <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="addAnswer(question);">
+        <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="addAnswer(question);"
+                ng-show="isSingleChoise(question) || isMultipleChoise(question)">
             <span class="glyphicon glyphicon-plus"></span>  Add new answer</button>
 
     </div>

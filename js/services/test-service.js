@@ -3,56 +3,44 @@
  */
 
 angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
-    return {
-        url : 'http://localhost:8080/ask/admin/tests',
 
-        deleteTest : function(id) {
-            $http.get(this.url + '/' + id).
-                then(function(response) {
-                    alert("success");
-                }, function(response) {
-                    alert("error");
-                });
-        },
+    $http.defaults.withCredentials = true;
 
-        createTest : function (test) {
-            var jsonString = JSON.stringify(test);
-            alert(jsonString);
-            $.ajax({
-                type: "POST",
-                url: this.url,
-                crossDomain : true,
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: jsonString,
-                success: function (data) {
-                    alert("success");
-                }
-            })
-        },
+    var service = {};
+    service.url = 'http://localhost:8080/ask/admin/tests';
 
-        updateTest : function (test) {
-            var jsonString = JSON.stringify(test);
-            $.ajax({
-                type: "POST",
-                url: this.url + "/" + test.id,
-                contentType:"application/json; charset=utf-8",
-                dataType: 'json',
-                data:  jsonString,
-                success: function(data){
-                    alert("success");
-                }
-            });
-        },
-
-        readTest : function (id) {
-            $http.get(this.url + '/' + id).
-                then(function(response) {
-                    return response;
-                }, function(response) {
-                    return {};
-                });
-        }
+    service.delete = function (id) {
+        return $http.get(this.url + '/' + id);
     };
 
+    service.create = function (test) {
+        var jsonString = JSON.stringify(test);
+        console.log(test);
+        return $http({
+            url: this.url,
+            method: 'POST',
+            data: jsonString,
+            headers: {'Content-Type': 'application/json'}
+        });
+    }
+    service.update = function (test) {
+        var jsonString = JSON.stringify(test);
+        console.log(test);
+        return $http({
+            url: this.url + '/' + test.id,
+            method: 'POST',
+            data: jsonString,
+            headers: {'Content-Type': 'application/json'}
+        });
+    };
+
+    service.findById = function (id) {
+        return $http.get(this.url + '/' + id);
+    };
+
+    service.findAll = function () {
+        return $http.get(this.url);
+    };
+
+    return service;
 }]);

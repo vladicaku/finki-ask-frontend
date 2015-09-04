@@ -1,9 +1,9 @@
-angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestService', '$routeParams',function($scope, $filter, TestService, $routeParams) {
+angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'TestService', '$routeParams',function($scope, $filter, TestService, $routeParams) {
    
     $scope.testTypesEnum = {
         test: 'TEST',
         anonymousTest: 'ANONYMOUSTEST',
-        survey: 'SURVEY',
+        survey: 'SURVEY'
     };
     
     $scope.questionTypesEnum = {
@@ -110,6 +110,8 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
             inputType: 'radio',
             answers: []
         });
+
+        $scope.addAnswer($scope.test.questions[$scope.test.questions.length - 1]);
     };
     
     $scope.deleteQuestion = function (question) {
@@ -185,9 +187,9 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
     // Answer methods
     $scope.addAnswer = function (question) {
         $scope.test.questions[$scope.test.questions.indexOf(question)].answers.push({
-                text: null,
+                text: "",
                 isChecked: false,
-                correct: null,
+                correct: "",
                 min: 0,
                 max: 0,
                 rangeCorrect: 0
@@ -229,7 +231,8 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
         // Fix text and range answers
         $scope.test.questions.forEach(function (question) {
             if (question.type == $scope.questionTypesEnum.text) {
-               question.answers.splice(1, question.answers.length - 1);
+                question.answers.splice(1, question.answers.length - 1);
+                question.answers[0].text="";
             }
 
             if (question.type == $scope.questionTypesEnum.range) {
@@ -239,11 +242,17 @@ angular.module('finkiAsk').controller('TestCtrl', ['$scope', '$filter', 'TestSer
             }
         });
 
-        alert(JSON.stringify($scope.test, null, "\t"));
         if ($scope.test.id == undefined) {
-            TestService.createTest($scope.test);
+            TestService.create($scope.test)
+                .then(function (response) {
+
+                },
+                function (response) {
+
+                });
+
         } else {
-            TestService.updateTest($scope.test);
+            TestService.update($scope.test);
         }
 
     }

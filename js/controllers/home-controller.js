@@ -1,4 +1,4 @@
-angular.module('finkiAsk').controller('TestsController', ['$scope', function($scope) {
+angular.module('finkiAsk').controller('HomeController', ['$scope', function($scope) {
     $scope.tests = [
         {
             id: 2,
