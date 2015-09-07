@@ -7,7 +7,7 @@ angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
     $http.defaults.withCredentials = true;
 
     var service = {};
-    service.url = 'http://localhost:8080/ask/admin/tests';
+    service.url = 'http://192.168.1.124:8080/ask/admin/tests';
 
     service.delete = function (id) {
         return $http.get(this.url + '/' + id);
@@ -24,6 +24,7 @@ angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
         });
     }
     service.update = function (test) {
+        alert('da');
         var jsonString = JSON.stringify(test);
         console.log(test);
         return $http({

@@ -5,7 +5,7 @@ angular.module('finkiAsk').config(['$routeProvider', function ($routeProvider)
             templateUrl: 'templates/pages/test/index.html',
             controller: 'TestController'
         }).
-        when('/create/:id', {
+        when('/test/:id', {
             templateUrl: 'templates/pages/test/index.html',
             controller: 'TestController'
         }).

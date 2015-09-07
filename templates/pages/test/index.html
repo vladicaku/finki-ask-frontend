@@ -65,6 +65,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group form-group-material-blue label-custom-black" ng-show="!test.isNew">
+                        <label class="col-xs-2 control-label" for="id">Date created</label>
+
+                        <div class="col-xs-3">
+                            <input class="form-control" id="id" type="text" disabled="" ng-model="test.dateCreated">
+                        </div>
+                    </div>
+
                     <div class="form-group form-group-material-blue label-custom-black"
                          ng-controller="DatePickerController">
                         <label class="col-xs-2 control-label">Start date</label>
@@ -73,7 +81,7 @@
                             <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
                                    ng-model="$parent.test.startDate" is-open="status.opened" required="required"/>
                         </div>
-                        <div style="col-xs-2">
+                        <div class="col-xs-2">
                             <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin"
                                     ng-click="open($event)">
                                 <i class="glyphicon glyphicon-calendar"></i> Select date
@@ -97,7 +105,7 @@
                             <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy"
                                    ng-model="$parent.test.endDate" is-open="status.opened"/>
                         </div>
-                        <div style="col-xs-2">
+                        <div class="col-xs-2">
                             <button class="btn btn-flat btn-sm btn-material-blue button-custom-margin" ng-click="open($event)">
                                 <i class="glyphicon glyphicon-calendar"></i> Select date
                             </button>

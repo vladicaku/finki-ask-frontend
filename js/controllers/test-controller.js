@@ -46,7 +46,9 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
             value: $scope.questionTypesEnum.range
         }
     ];
- 
+
+    $scope.hasError = false;
+    $scope.error = '';
     
     $scope.test = {};
     $scope.test.name = null;
@@ -63,20 +65,58 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
     $scope.test.password = null;
     $scope.test.questions = [];
 
-
     var id = $routeParams.id;
     if (id != undefined) {
         $scope.test.isNew = false;
-        $scope.test = TestService.readTest(id);
-        $scope.test.questions.forEach(function(question) {
-            if (question.type == $scope.questionTypesEnum.range) {
-                var text = question.answers[0].text;
-                var splited = text.split(":");
-                question.answers[0].min = splited[0];
-                question.answers[0].max = splited[0];
-                question.answers[0].correct = splited[0];
+        $scope.test = TestService.findById(id).then(
+            function (response) {
+                if (response.data.responseStatus == 'SUCCESS') {
+                    $scope.hasError = false;
+
+                    $scope.test = response.data.data;
+                    $scope.test.startDate = $scope.test.start.split(' ')[0];
+                    $scope.test.endDate = $scope.test.end.split(' ')[0];
+                    var d = new Date();
+                    d.setHours($scope.test.start.split(' ')[1].split(':')[0]);
+                    d.setMinutes($scope.test.start.split(' ')[1].split(':')[1]);
+                    $scope.test.startTime = d;
+                    var d1 = new Date();
+                    d1.setHours($scope.test.end.split(' ')[1].split(':')[0]);
+                    d1.setMinutes($scope.test.end.split(' ')[1].split(':')[1]);
+                    console.log(d1);
+                    $scope.test.endTime = d1;
+
+                    $scope.test.questions.forEach(function (question) {
+                        if (question.type == $scope.questionTypesEnum.range) {
+                            var splited =  question.answers[0].text.split(":");
+                            question.answers[0].min = parseInt(splited[0]);
+                            question.answers[0].max = parseInt(splited[1]);
+                            question.answers[0].rangeCorrect =  parseInt(question.answers[0].correct);
+                        }
+                        else if (question.type == $scope.questionTypesEnum.text) {
+
+                        }
+
+                        if (question.type == $scope.questionTypesEnum.multipleChoise) {
+                            question.inputType = 'checkbox';
+                        } else if (question.type == $scope.questionTypesEnum.singleChoise) {
+                            question.inputType = 'radio';
+                        }
+                    });
+
+                    console.log($scope.test);
+                }
+                else if (response.data.responseStatus == 'ERROR') {
+                    $scope.hasError = true;
+                    $scope.error = response.data.description;
+                }
+            },
+            function (response) {
+                $scope.hasError = true;
+                $scope.error = response.data.description;
+                console.log(response);
             }
-        });
+        );
     }
     else {
         $scope.test.isNew = true;
@@ -222,7 +262,7 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
         // Concatenate date and time into one string
         var date = $filter('date')($scope.test.startDate, "dd/MM/yyyy");
         var time = $filter('date')($scope.test.startTime, "HH:mm");
-        $scope.test.start = date + " " + time;
+        $scope.test.start = date + " " + time ;
 
         date = $filter('date')($scope.test.endDate, "dd/MM/yyyy");
         time = $filter('date')($scope.test.endTime, "HH:mm");
