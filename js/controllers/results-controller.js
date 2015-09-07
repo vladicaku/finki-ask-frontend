@@ -5,7 +5,7 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
 
     $scope.hasError = false;
     $scope.error = '';
-    $scope.refreshInterval = 1000;
+    $scope.refreshInterval = 400;
 
     $scope.test = {};
     $scope.categories = [];
@@ -168,7 +168,7 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
         ResultsService.loadResults(id).then(
             function (response) {
                 $scope.test = response.data.data.test;
-                if (response.data.data.correct.length > 1) {
+                if (response.data.data.correct.length > 6) {
                     $scope.options.chart.type = 'bar';
                     $scope.options.plotOptions.series = $scope.options.plotOptions.column;
                     $scope.options.plotOptions.column = null;
