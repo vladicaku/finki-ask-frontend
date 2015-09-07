@@ -89,6 +89,7 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
         }]
     };
 
+
     $(document).ready(function() {
         /**
          * Grid-light theme for Highcharts JS
@@ -165,17 +166,25 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);
 
-        $scope.chart = new Highcharts.Chart($scope.options);
+
 
         ResultsService.loadResults(id).then(
             function (response) {
                 $scope.test = response.data.data.test;
+                if (response.data.data.correct.length > 1) {
+                    $scope.options.chart.type = 'bar';
+                    $scope.options.plotOptions.series = $scope.options.plotOptions.column;
+                    $scope.options.plotOptions.column = null;
+                }
+                $scope.chart = new Highcharts.Chart($scope.options);
+
                 $scope.chart.setTitle({text: response.data.data.test.name}, true);
                 var categories = [];
                 response.data.data.results.forEach(function (r){
                     categories.push(r.question.text);
                 });
                 $scope.chart.xAxis[0].setCategories(categories, true);
+                update();
                 $interval(update, $scope.refreshInterval);
             },
             function (response) {
