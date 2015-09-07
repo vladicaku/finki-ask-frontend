@@ -9,7 +9,13 @@
         </div>
 
         <div class="panel-body">
-            <div id="container" style="margin: 0 auto"></div>
+            <div class="alert alert-dismissable alert-danger" ng-show="hasError">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>Something went wrong!</h4>
+                <p>{{error}}</p>
+            </div>
+
+            <div id="container" style="margin: 0 auto" ng-hide="hasError"></div>
         </div>
     </div>
 

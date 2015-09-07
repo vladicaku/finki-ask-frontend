@@ -158,16 +158,12 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
                 }
             },
 
-
             // General
             background2: '#F0F0EA'
-
         };
 
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);
-
-
 
         ResultsService.loadResults(id).then(
             function (response) {
