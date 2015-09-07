@@ -27,8 +27,8 @@
       <file leaf-file-name="results-controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/controllers/results-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39952996" vertical-offset="2635" max-vertical-offset="3655">
-              <caret line="175" column="89" selection-start-line="175" selection-start-column="89" selection-end-line="175" selection-end-column="89" />
+            <state vertical-scroll-proportion="-2.0176263" vertical-offset="2431" max-vertical-offset="3672">
+              <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -646,8 +646,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/controllers/results-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39952996" vertical-offset="2635" max-vertical-offset="3655">
-          <caret line="175" column="89" selection-start-line="175" selection-start-column="89" selection-end-line="175" selection-end-column="89" />
+        <state vertical-scroll-proportion="-2.0176263" vertical-offset="2431" max-vertical-offset="3672">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
           <folding />
         </state>
       </provider>

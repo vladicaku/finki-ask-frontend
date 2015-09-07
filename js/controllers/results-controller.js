@@ -39,7 +39,8 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
                 enabled: true,
                 style: {
                     fontWeight: 'bold',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray',
+                    fontSize: '17px'
                 }
             }
         },
@@ -69,7 +70,7 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
                     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
                     style: {
                         textShadow: '0 0 3px black',
-                        fontSize: '18px'
+                        fontSize: '17px'
                     }
                 }
             }
