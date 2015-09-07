@@ -185,9 +185,9 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
                 $interval(update, $scope.refreshInterval);
             },
             function (response) {
-                $scope.hasError = false;
-                $scope.error = 'Something went wrong!';
-                $scope.error = $scope.error + "\n"  + response.error;
+                $scope.hasError = true;
+                //$scope.error = 'Something went wrong!';
+                $scope.error = response.status ;
             }
         );
 
