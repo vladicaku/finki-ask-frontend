@@ -18,6 +18,10 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
         return;
     }
 
+    // destroy pool loop when leave this url
+    $scope.intervalPromise = null;
+    $scope.$on('$destroy', function () { $interval.cancel($scope.intervalPromise); });
+
     $scope.chart = null;
     $scope.options = {
         chart: {
@@ -25,10 +29,10 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
             type: 'column'
         },
         title: {
-            text: 'Stacked column chart'
+            text: 'TEST'
         },
         xAxis: {
-            categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+            categories: []
         },
         yAxis: {
             min: 0,
@@ -78,15 +82,15 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
         series: [{
             name: 'Incorrect',
             color: '#E00000 ',
-            data: [5, 3, 4, 7, 2]
+            data: []
         }, {
             name: 'Partial correct',
             color: '#FFCC33',
-            data: [2, 2, 3, 2, 1]
+            data: []
         }, {
             name: 'Correct',
             color: '#339900',
-            data: [3, 4, 4, 2, 5]
+            data: []
         }]
     };
 
@@ -167,6 +171,13 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
 
         ResultsService.loadResults(id).then(
             function (response) {
+            	console.log(response);
+                if (response.data.responseStatus != 'SUCCESS') {
+                    $scope.hasError = true;
+                    //$scope.error = 'Something went wrong!';
+                    $scope.error = response.status ;
+                }
+
                 $scope.test = response.data.data.test;
                 if (response.data.data.correct.length > 6) {
                     $scope.options.chart.type = 'bar';
@@ -182,7 +193,7 @@ angular.module('finkiAsk').controller('ResultsController', ['$scope', '$routePar
                 });
                 $scope.chart.xAxis[0].setCategories(categories, true);
                 update();
-                $interval(update, $scope.refreshInterval);
+                $scope.intervalPromise = $interval(update, $scope.refreshInterval);
             },
             function (response) {
                 $scope.hasError = true;

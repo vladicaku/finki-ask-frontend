@@ -5,6 +5,11 @@
         width: 80px;
         margin-left: 15px;
     }
+
+    .no-margin
+    {
+        margin: 0;
+    }
 </style>
 <div class="col-xs-12">
     <div class="panel panel-material-blue">
@@ -56,7 +61,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="well" dir-paginate="test in tests |  filter: {$ : search.text }  |  filter : search.filterOnlyActive : true | itemsPerPage: 5  " ng-class="{ 'success' : test.isActive == 'true' };">
+                    <tr class="well" dir-paginate="test in tests |  filter: {$ : search.text }  |  filter : search.filterOnlyActive : true | itemsPerPage: 5  " ng-class="{ 'success' : test.isActive == true };">
                         <td><p>{{test.id}}</p></td>
                         <!--
                         <td>
@@ -64,7 +69,7 @@
                             <i ng-show="test.isActive == 'false'" class="btn-lg mdi-material-red  mdi-content-clear "></i>
                         </td>
                         -->
-                        <td><p><strong><a ng-href="#/test/{{test.id}}">{{test.name}}</a></strong></p></td>
+                        <td><p><strong><a class="text-info" ng-href="#/test/{{test.id}}">{{test.name}}</a></strong></p></td>
                         <td><p><strong>{{test.type}}</strong></p></td>
                         <td><p><strong>{{test.isPublic}}</strong></p></td>
                         <td><p>{{test.dateCreated}}</p></td>
@@ -80,15 +85,8 @@
                         </td>
                         -->
                         <td class="col-xs-3">
-                            <p>
-                                <a class="fixedSizeButton text-primary" href=""><i class="mdi-editor-border-color"></i> Edit</a>
-                                <a class="fixedSizeButton text-danger" href=""><i class="mdi-content-clear"></i> Delete</a>
-
-                            </p>
-                            <p>
-                                <a class="fixedSizeButton text-info" href=""><i class="mdi-content-content-copy"></i> Clone</a>
-                                <a ng-href="#/results/{{test.id}}" class="btn btn-flat btn-sm btn-material-green"><i class="glyphicon glyphicon-stats"></i>  Results</a>
-                            </p>
+                            <a class="no-margin btn btn-flat btn-sm btn-material-green" href=""><i class="glyphicon glyphicon-duplicate"></i> Clone</a>
+                            <a ng-href="#/live-results/{{test.id}}" class="no-margin btn btn-flat btn-sm btn-material-blue"><i class="glyphicon glyphicon-stats"></i>  Live results</a>
                         </td>
 
                     </tr>

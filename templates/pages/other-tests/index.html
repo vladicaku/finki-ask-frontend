@@ -1,0 +1,104 @@
+<style>
+    .fixedSizeButton
+    {
+        display: inline-block;
+        width: 80px;
+        margin-left: 15px;
+    }
+
+    .no-margin
+    {
+        margin: 0;
+    }
+</style>
+<div class="col-xs-12">
+    <div class="panel panel-material-blue">
+        <div class="panel-heading">
+            <h3 class="panel-title">Options</h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="togglebutton togglebutton-material-blue col-xs-3">
+                <label>
+                    <input type="checkbox" ng-change="changeOnlyActiveFilter()" ng-model="myCheckBox" checked="false"> Show only active tests
+                </label>
+            </div>
+
+            <div class="form-group form-group-material-blue col-xs-4 pull-right">
+                <label class="col-xs-1 control-label">
+                    <span class="glyphicon glyphicon-search" style="padding-top: 10px;"></span>
+                </label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" ng-model="search.text" placeholder="Search">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-material-blue">
+        <div class="panel-heading">
+            <h3 class="panel-title">Other tests</h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="alert alert-dismissable alert-danger" ng-show="hasError">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>Something went wrong!</h4>
+                <p>{{error}}</p>
+            </div>
+
+            <table class="table table-hover" ng-hide="hasError">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Public</th>
+                    <th>User</th>
+                    <th>Date created</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="well" dir-paginate="test in tests |  filter: {$ : search.text }  |  filter : search.filterOnlyActive : true | itemsPerPage: 5  " ng-class="{ 'success' : test.isActive == true };">
+                    <td><p>{{test.id}}</p></td>
+                    <!--
+                    <td>
+                        <i ng-show="test.isActive == 'true'" class="btn-lg mdi-material-teal  mdi-action-done"></i>
+                        <i ng-show="test.isActive == 'false'" class="btn-lg mdi-material-red  mdi-content-clear "></i>
+                    </td>
+                    -->
+                    <td><p><strong><a class="text-info" ng-href="#/test/{{test.id}}">{{test.name}}</a></strong></p></td>
+                    <td><p><strong>{{test.type}}</strong></p></td>
+                    <td><p><strong>{{test.isPublic}}</strong></p></td>
+                    <td><p><strong>{{test.creator.firstAndLastName}}</strong></p></td>
+                    <td><p>{{test.dateCreated}}</p></td>
+                    <td><p>{{test.start}}</p></td>
+                    <td><p>{{test.end}}</p></td>
+                    <!--
+                    <td>
+                        <a class="btn btn-primary btn-sm">Edit</a>
+                        <a class="btn btn-primary btn-sm btn-info">Clone</a>
+                        <a class="btn btn-primary btn-sm btn btn-danger">Delete</a>
+
+                        <a style="margin-left: 30px;" class="btn btn-primary btn-sm btn btn-success">Results</a>
+                    </td>
+                    -->
+                    <td class="col-xs-3">
+                        <a class="no-margin btn btn-flat btn-sm btn-material-green" href=""><i class="glyphicon glyphicon-duplicate"></i> Clone</a>
+                        <a ng-href="#/live-results/{{test.id}}" class="no-margin btn btn-flat btn-sm btn-material-blue"><i class="glyphicon glyphicon-stats"></i>  Live results</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+</div>

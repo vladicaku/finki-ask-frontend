@@ -9,7 +9,7 @@
 </style>
 
 <div class="col-xs-12">
-    <form class="form-horizontal">
+    <form name="testForm" class="form-horizontal" ng-submit="testForm.$valid && submit()">
         <fieldset>
             <div class="panel panel-material-blue shadow-z-2">
                 <div class="panel-heading">
@@ -59,7 +59,7 @@
                         <div class="col-lg-3">
                             <div class="checkbox checkbox-material-blue" style="padding-top: 0;">
                                 <label>
-                                    <input type="checkbox" ng-model="test.isPublic" required="required">
+                                    <input type="checkbox" ng-model="test.isPublic">
                                 </label>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
             </div>
 
         </fieldset>
-    </form>
+
 
     <div class="well">
         <button class="btn btn-flat btn-material-blue" ng-click="addQuestion();">
@@ -191,9 +191,11 @@
     </div>
 
     <div class="well">
-        <a ng-click="submit()" class="btn btn-success">Save</a>
-        <a href="javascript:void(0)" class="btn btn-danger">Cancel</a>
+        <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i>  Save</button>
+        <a ng-click="cancel()" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>  Cancel</a>
     </div>
+
+    </form>
 </div>
 
 <script>

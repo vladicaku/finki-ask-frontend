@@ -1,5 +1,9 @@
+/**
+ * Created by user on 9/10/2015.
+ */
+
 angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'TestService', '$routeParams', '$location',function($scope, $filter, TestService, $routeParams, $location) {
-   
+
     $scope.testTypesEnum = {
         test: 'TEST',
         anonymousTest: 'ANONYMOUSTEST',
@@ -49,22 +53,9 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
 
     $scope.hasError = false;
     $scope.error = '';
-    $scope.onlyForRead = false;
+    $scope.onlyForRead = true;
 
     $scope.test = {};
-    $scope.test.name = null;
-    $scope.test.type =  $scope.testTypes[0].value;
-    $scope.test.isPublic = null;
-    $scope.test.dateCreated =  $filter('date')(new Date(), "dd/MM/yyyy HH:mm");
-    $scope.test.start = null; 
-    $scope.test.end = null;
-    $scope.test.startDate = new Date();
-    $scope.test.endDate = new Date();
-    $scope.test.startTime = new Date();
-    $scope.test.endTime =  new Date();
-    $scope.test.duration = null; 
-    $scope.test.password = null;
-    $scope.test.questions = [];
 
     var id = $routeParams.id;
     if (id != undefined) {
@@ -123,6 +114,7 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
         $scope.test.isNew = true;
     }
 
+
     // Test methods
     $scope.isTest = function() {
         return $scope.test.type == $scope.testTypesEnum.test||
@@ -165,7 +157,7 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
 
         $scope.addAnswer($scope.test.questions[$scope.test.questions.length - 1]);
     };
-    
+
     $scope.deleteQuestion = function (question) {
         var r = confirm("Are you absolutely sure you want to delete this question?");
         if (r == false) {
@@ -173,7 +165,7 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
         }
         $scope.test.questions.splice($scope.test.questions.indexOf(question), 1);
     };
-    
+
     $scope.questionTypeChanged = function (question) {
         // rebuild array in order Materialize to process changes
         var temp = question.answers;
@@ -194,14 +186,14 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
 
             }
             question.answers.push({
-                    id: element.id,
-                    text: element.text,
-                    isChecked: myIsChecked,
-                    correct: element.correct,
-                    min: element.min,
-                    max: element.max,
-                    rangeCorrect: element.rangeCorrect
-                });
+                id: element.id,
+                text: element.text,
+                isChecked: myIsChecked,
+                correct: element.correct,
+                min: element.min,
+                max: element.max,
+                rangeCorrect: element.rangeCorrect
+            });
         });
 
         if (question.type == $scope.questionTypesEnum.multipleChoise) {
@@ -210,23 +202,23 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
             question.inputType = 'radio';
         }
     };
-    
+
     $scope.isRange = function (question) {
         return question.type == $scope.questionTypesEnum.range;
     };
-    
+
     $scope.isText = function (question) {
         return question.type == $scope.questionTypesEnum.text;
     };
-    
+
     $scope.isSingleChoise = function (question) {
         return question.type == $scope.questionTypesEnum.singleChoise;
     };
-    
+
     $scope.isMultipleChoise = function (question) {
         return question.type == $scope.questionTypesEnum.multipleChoise;
     };
-    
+
     $scope.inputType = function (question) {
         if (question.type == $scope.questionTypesEnum.multipleChoise) {
             return 'checkbox';
@@ -239,15 +231,15 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
     // Answer methods
     $scope.addAnswer = function (question) {
         $scope.test.questions[$scope.test.questions.indexOf(question)].answers.push({
-                text: "",
-                isChecked: false,
-                correct: "",
-                min: 0,
-                max: 0,
-                rangeCorrect: 0
-            });
+            text: "",
+            isChecked: false,
+            correct: "",
+            min: 0,
+            max: 0,
+            rangeCorrect: 0
+        });
     };
-    
+
     $scope.deleteAnswer = function (question, answer) {
         var r = confirm("Are you absolutely sure you want to delete this answer?");
         if (r == false) {
@@ -257,80 +249,16 @@ angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'T
         var answerId = $scope.test.questions[questionId].answers.indexOf(answer);
         $scope.test.questions[questionId].answers.splice(answerId, 1);
     };
-    
+
     $scope.radioChanged = function (answer, question) {
         if (question.type == $scope.questionTypesEnum.singleChoise) {
             //answer.isChecked = true;
             question.answers.forEach(function (a) {
-                    if (a !== answer) {
-                        a.isChecked = false;
-                    }
+                if (a !== answer) {
+                    a.isChecked = false;
+                }
             });
         }
     };
 
-    // Submit methods
-    $scope.submit = function () {
-    	alert("Submited");
-        // Concatenate date and time into one string
-        var date = $filter('date')($scope.test.startDate, "dd/MM/yyyy");
-        var time = $filter('date')($scope.test.startTime, "HH:mm");
-        $scope.test.start = date + " " + time ;
-
-        date = $filter('date')($scope.test.endDate, "dd/MM/yyyy");
-        time = $filter('date')($scope.test.endTime, "HH:mm");
-        $scope.test.end = date + " " + time;
-
-        // Fix text and range answers
-        $scope.test.questions.forEach(function (question) {
-            if (question.type == $scope.questionTypesEnum.text) {
-                question.answers.splice(1, question.answers.length - 1);
-                question.answers[0].text="";
-            }
-
-            if (question.type == $scope.questionTypesEnum.range) {
-                question.answers.splice(1, question.answers.length - 1);
-                question.answers[0].text  = question.answers[0].min + ":" + question.answers[0].max;
-                question.answers[0].correct = question.answers[0].rangeCorrect;
-            }
-        });
-
-        if ($scope.test.id == undefined) {
-            TestService.create($scope.test)
-                .then(function (response) {
-                    if (response.data.responseStatus == 'SUCCESS') {
-                        $location.path("/home");
-                    }
-                    else {
-                        alert("Something went wrong. Try again later.");
-                    }
-                },
-                function (response) {
-                    alert("Something went wrong. Try again later.");
-                });
-
-        } else {
-            TestService.update($scope.test)
-                .then(function (response) {
-                    if (response.data.responseStatus == 'SUCCESS') {
-                        $location.path("/home");
-                    }
-                    else {
-                        alert("Something went wrong. Try again later.");
-                    }
-                },
-                function (response) {
-                    alert("Something went wrong. Try again later.");
-                });
-        }
-
-    }
-
-    $scope.cancel = function () {
-        var r = confirm("Are you absolutely sure you want to cancel?");
-        if (r == false) {
-            return;
-        }
-        $location.path("/home");
-    }
 }]);

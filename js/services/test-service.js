@@ -8,10 +8,12 @@ angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
 
     var service = {};
     //service.url = 'http://192.168.1.124:8080/ask/admin/tests';
-    service.url = 'http://192.168.0.109:8080/ask/admin/tests';
+    //service.url = 'http://192.168.0.109:8080/ask/admin/tests';
+    service.url = 'http://localhost:8080/ask/admin/tests';
+    service.urlOtherTest = 'http://localhost:8080/ask/admin/other/tests';
 
     service.delete = function (id) {
-        return $http.get(this.url + '/' + id);
+        return $http.delete(this.url + '/' + id);
     };
 
     service.create = function (test) {
@@ -21,18 +23,19 @@ angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
             url: this.url,
             method: 'POST',
             data: jsonString,
-            headers: {'Content-Type': 'application/json'}
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true
         });
     }
     service.update = function (test) {
-        alert('da');
         var jsonString = JSON.stringify(test);
         console.log(test);
         return $http({
             url: this.url + '/' + test.id,
             method: 'POST',
             data: jsonString,
-            headers: {'Content-Type': 'application/json'}
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true
         });
     };
 
@@ -42,6 +45,10 @@ angular.module('finkiAsk').factory('TestService', ['$http', function ($http) {
 
     service.findAll = function () {
         return $http.get(this.url);
+    };
+
+    service.findOther = function () {
+        return $http.get(this.urlOtherTest + "?except=true");
     };
 
     return service;

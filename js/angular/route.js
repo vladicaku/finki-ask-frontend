@@ -1,6 +1,10 @@
 angular.module('finkiAsk').config(['$routeProvider', function ($routeProvider)
 {
     $routeProvider.
+        when('/home', {
+            templateUrl: 'templates/pages/home/index.html',
+            controller: 'HomeController'
+        }).
         when('/create-test', {
             templateUrl: 'templates/pages/test/index.html',
             controller: 'TestController'
@@ -9,17 +13,13 @@ angular.module('finkiAsk').config(['$routeProvider', function ($routeProvider)
             templateUrl: 'templates/pages/test/index.html',
             controller: 'TestController'
         }).
-        when('/results/:id', {
+        when('/live-results/:id', {
             templateUrl: 'templates/pages/results/index.html',
             controller: 'ResultsController'
         }).
-        when('/home', {
-            templateUrl: 'templates/pages/home/index.html',
-            controller: 'HomeController'
-        }).
         when('/other-tests', {
             templateUrl: 'templates/pages/other-tests/index.html',
-            controller: 'DashboardController'
+            controller: 'OtherTestController'
         }).
         otherwise({
             redirectTo: '/home'
