@@ -19,7 +19,7 @@ angular.module('finkiAsk').config(['$routeProvider', function ($routeProvider)
         }).
         when('/other-tests', {
             templateUrl: 'templates/pages/other-tests/index.html',
-            controller: 'OtherTestController'
+            controller: 'OtherTestsController'
         }).
         otherwise({
             redirectTo: '/home'

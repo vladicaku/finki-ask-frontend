@@ -1,8 +1,7 @@
 /**
  * Created by user on 9/10/2015.
  */
-
-angular.module('finkiAsk').controller('TestController', ['$scope', '$filter', 'TestService', '$routeParams', '$location',function($scope, $filter, TestService, $routeParams, $location) {
+angular.module('finkiAsk').controller('OtherTestController', ['$scope', '$filter', 'TestService', '$routeParams', '$location',function($scope, $filter, TestService, $routeParams, $location) {
 
     $scope.testTypesEnum = {
         test: 'TEST',

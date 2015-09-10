@@ -1,4 +1,4 @@
-angular.module('finkiAsk').controller('OtherTestController', ['$scope', 'TestService', function($scope, TestService) {
+angular.module('finkiAsk').controller('OtherTestsController', ['$scope', 'TestService', function($scope, TestService) {
     $scope.hasError = false;
     $scope.error = '';
 
